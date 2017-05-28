@@ -1,0 +1,8 @@
+# Program name: testone.txt
+# CPU Generator (lambda=2.0, lower_bound=1, upper_bound=50)
+# IO (lambda=2.0, lower_bound=1, upper_bound=20, devices=[1, 2])
+CPU 12
+IO 8 2
+CPU 22
+IO 9 2
+CPU 18
