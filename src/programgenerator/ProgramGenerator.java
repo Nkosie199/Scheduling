@@ -11,8 +11,13 @@ import simulator.Instruction;
 /**
  * Write a description of class ProgramGenerator here.
  * 
+<<<<<<< HEAD
  * @author (your name) 
  * @version (a version number or a date)
+=======
+ * @author Nkosi Gumede 
+ * @version 26/5/2017
+>>>>>>> 0d2a49eabd93494734b0d375ade47ee0c1992da2
  */
 public class ProgramGenerator {
     private CPUGenerator cpuGen;
