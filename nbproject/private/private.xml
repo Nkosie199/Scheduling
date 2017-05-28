@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
@@ -14,3 +15,15 @@
         </group>
     </open-files>
 </project-private>
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/home/g/gmdnko003/NetBeansProjects/Scheduling%201/Scheduling%201/src/programgenerator/ProgramGenerator.java</file>
+            <file>file:/home/g/gmdnko003/NetBeansProjects/Scheduling%201/Scheduling%201/src/FCFSKernel.java</file>
+        </group>
+    </open-files>
+</project-private>
+>>>>>>> cc743fda113227879e53af53c30da02d10d3a4fe

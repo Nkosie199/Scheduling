@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import java.util.Scanner;
 import simulator.Config;
 import simulator.Kernel;
@@ -58,3 +59,18 @@ public class SimulateFCFS extends FCFSKernel {
         System.out.println("CPU utilization: "); //eg. 50.72
     }
 }
+=======
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author gmdnko003
+ */
+public class SimulateFCFS {
+    
+}
+>>>>>>> cc743fda113227879e53af53c30da02d10d3a4fe

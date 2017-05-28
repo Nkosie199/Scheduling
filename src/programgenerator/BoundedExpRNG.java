@@ -3,8 +3,13 @@ import java.util.Random;
 /**
  * Write a description of class BoundedRNG here.
  * 
+<<<<<<< HEAD
  * @author Nkosi Gumede
  * @version 28/5/2017
+=======
+ * @author (your name) 
+ * @version (a version number or a date)
+>>>>>>> cc743fda113227879e53af53c30da02d10d3a4fe
  */
 public class BoundedExpRNG {
     private double lambda;
