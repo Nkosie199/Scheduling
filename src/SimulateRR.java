@@ -1,11 +1,11 @@
-<<<<<<< HEAD
 /**
  * @author Nkosingiphile
  * @version 28/5/2017
  */
 
 public class SimulateRR extends RoundRobinKernel{
-
+    
+    
     public static void main(String[] args){
         System.out.println("*** RR Simulator ***");
         
@@ -35,18 +35,3 @@ public class SimulateRR extends RoundRobinKernel{
     }
 
 }
-=======
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author gmdnko003
- */
-public class SimulateRR {
-    
-}
->>>>>>> cc743fda113227879e53af53c30da02d10d3a4fe

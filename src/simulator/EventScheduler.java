@@ -12,10 +12,6 @@ class EventScheduler {
     public EventScheduler() {
         this.queue = new EventQueue();
     }
-<<<<<<< HEAD
-=======
-    
->>>>>>> cc743fda113227879e53af53c30da02d10d3a4fe
         
     public void schedule(final Event event) { 
         queue.add(event); 

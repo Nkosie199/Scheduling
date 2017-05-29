@@ -15,8 +15,7 @@ public class CPU  {
     CPU() {
         this.contextSwitches = 0;
         this.currentProcess = null;
-    }
-    
+    }  
     
     /**
      * Obtain the currently executing process.

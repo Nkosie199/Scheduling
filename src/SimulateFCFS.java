@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import java.util.Scanner;
 import simulator.Config;
 import simulator.Kernel;
@@ -36,19 +35,19 @@ public class SimulateFCFS extends FCFSKernel {
         System.out.println("Enter trace level: "); //eg. 0
         traceLevel = sc.nextInt();
         
-        // run the experiment
-        TRACE.SET_TRACE_LEVEL(traceLevel); //Set the level of trace detail
-        final Kernel kernel = new FCFSKernel(); //Create the kernel.
-        Config.init(kernel, costOfContextSwitch, costOfSyscall); //Initialise the simulation with the given kernel, dispatch cost and system call cost
-        Config.buildConfiguration(configFileName); //Build the workload configuration described in the given configuration file
-        Config.run(); //Run the simulation.
-        SystemTimer timer = Config.getSystemTimer(); //Get the SystemTimer object
-        System.out.println(timer); //Print the SystemTimer (outputs a string describing system time, kernel time, user time, idle time)
-        System.out.println("Context switches:"
-        +Config.getCPU().getContextSwitches()); //Print the number of context switches recorded by the CPU
-        System.out.printf("CPU utilization: %.2f\n",
-        ((double)timer.getUserTime())/timer.getSystemTime()*100); //Calculate and print the CPU utilisation based on the available timings
-        
+//        // run the experiment
+//        TRACE.SET_TRACE_LEVEL(traceLevel); //Set the level of trace detail
+//        final Kernel kernel = new FCFSKernel(); //Create the kernel.
+//        Config.init(kernel, costOfContextSwitch, costOfSyscall); //Initialise the simulation with the given kernel, dispatch cost and system call cost
+//        Config.buildConfiguration(configFileName); //Build the workload configuration described in the given configuration file
+//        Config.run(); //Run the simulation.
+//        SystemTimer timer = Config.getSystemTimer(); //Get the SystemTimer object
+//        System.out.println(timer); //Print the SystemTimer (outputs a string describing system time, kernel time, user time, idle time)
+//        System.out.println("Context switches:"
+//        +Config.getCPU().getContextSwitches()); //Print the number of context switches recorded by the CPU
+//        System.out.printf("CPU utilization: %.2f\n",
+//        ((double)timer.getUserTime())/timer.getSystemTime()*100); //Calculate and print the CPU utilisation based on the available timings
+//        
         // print out the results
         System.out.println("*** Results ***");
         System.out.println("System time: "); //eg. 69        
@@ -59,18 +58,3 @@ public class SimulateFCFS extends FCFSKernel {
         System.out.println("CPU utilization: "); //eg. 50.72
     }
 }
-=======
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author gmdnko003
- */
-public class SimulateFCFS {
-    
-}
->>>>>>> cc743fda113227879e53af53c30da02d10d3a4fe
