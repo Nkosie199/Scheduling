@@ -12,19 +12,19 @@ import java.util.List;
  */
 public class ProcessControlBlockImpl implements ProcessControlBlock {
     
-    private String programName;
-    private int PID;
-    private int priority;
-    private State state;
-    private List<Instruction> instructions;
-    private Instruction instruction;
+    private static String programName;
+    private static int PID = 0;
+    private static int priority = 0;
+    private static State state;
+    private static List<Instruction> instructions;
+    private static Instruction instruction;
     
-    public ProcessControlBlockImpl(String programName, int PID, int priority, State state, List<Instruction> instructions){
+    public ProcessControlBlockImpl(String programName, int priority, State state, Instruction instruction){
         this.programName =  programName;
-        this.PID = PID;
+        this.PID = this.PID++;
         this.priority = priority;
         this.state = state;
-        this.instructions = instructions;
+        this.instructions.add(instruction);
     }
         
     @Override
@@ -77,9 +77,7 @@ public class ProcessControlBlockImpl implements ProcessControlBlock {
     public void setState(State state) {
         this.state = state;
     }
-    
-    
-    
+
     public static ProcessControlBlock loadProgram(String filename) throws FileNotFoundException, IOException{
         ProcessControlBlock pcb = null;
         FileReader fr = new FileReader(filename);
@@ -93,14 +91,14 @@ public class ProcessControlBlockImpl implements ProcessControlBlock {
                 String deviceType = lineElements[0];
                 int burstTime = Integer.parseInt(lineElements[1]);
                 // create CPU process
-                
+                pcb = new ProcessControlBlockImpl(filename, priority, state.READY, new CPUInstruction(burstTime));
             }
             else if (lineElements.length == 3){ // IO instruction
                 String deviceType = lineElements[0];
                 int burstTime = Integer.parseInt(lineElements[1]);
                 int deviceID = Integer.parseInt(lineElements[2]);
                 // create IO process
-                
+                pcb = new ProcessControlBlockImpl(filename, priority, state.READY, new IOInstruction(burstTime, deviceID));
             }
             line = br.readLine();
         }
