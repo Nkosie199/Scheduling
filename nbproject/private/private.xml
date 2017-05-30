@@ -1,29 +1,13 @@
-<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Nkosingiphile/Documents/NetBeansProjects/Scheduling1-master/src/SimulateFCFS.java</file>
-            <file>file:/C:/Users/Nkosingiphile/Documents/NetBeansProjects/Scheduling1-master/src/simulator/EventScheduler.java</file>
-            <file>file:/C:/Users/Nkosingiphile/Documents/NetBeansProjects/Scheduling1-master/src/RoundRobinKernel.java</file>
-            <file>file:/C:/Users/Nkosingiphile/Documents/NetBeansProjects/Scheduling1-master/src/simulator/Config.java</file>
-            <file>file:/C:/Users/Nkosingiphile/Documents/NetBeansProjects/Scheduling1-master/src/FCFSKernel.java</file>
-            <file>file:/C:/Users/Nkosingiphile/Documents/NetBeansProjects/Scheduling1-master/src/SimulateRR.java</file>
-            <file>file:/C:/Users/Nkosingiphile/Documents/NetBeansProjects/Scheduling1-master/src/programgenerator/ProgramGenerator.java</file>
-            <file>file:/C:/Users/Nkosingiphile/Documents/NetBeansProjects/Scheduling1-master/src/simulator/ProcessControlBlock.java</file>
+            <file>file:/C:/Users/Nkosingiphile/Documents/NetBeansProjects/Scheduling1/src/FCFSKernel.java</file>
+            <file>file:/C:/Users/Nkosingiphile/Documents/NetBeansProjects/Scheduling1/testone.txt</file>
+            <file>file:/C:/Users/Nkosingiphile/Documents/NetBeansProjects/Scheduling1/src/SimulateFCFS.java</file>
+            <file>file:/C:/Users/Nkosingiphile/Documents/NetBeansProjects/Scheduling1/src/simulator/ProcessControlBlockImpl.java</file>
+            <file>file:/C:/Users/Nkosingiphile/Documents/NetBeansProjects/Scheduling1/src/simulator/ProcessControlBlock.java</file>
         </group>
     </open-files>
 </project-private>
-=======
-<?xml version="1.0" encoding="UTF-8"?>
-<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
-    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/home/g/gmdnko003/NetBeansProjects/Scheduling%201/Scheduling%201/src/programgenerator/ProgramGenerator.java</file>
-            <file>file:/home/g/gmdnko003/NetBeansProjects/Scheduling%201/Scheduling%201/src/FCFSKernel.java</file>
-        </group>
-    </open-files>
-</project-private>
->>>>>>> cc743fda113227879e53af53c30da02d10d3a4fe

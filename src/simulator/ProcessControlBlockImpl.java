@@ -11,13 +11,21 @@ import java.util.List;
  * @author gmdnko003
  */
 public class ProcessControlBlockImpl implements ProcessControlBlock {
-    Instruction instruction;
-    List<Instruction> instructions; 
-    int PID;
-    String programName;
-    int priority;
-    State state;
     
+    private String programName;
+    private int PID;
+    private int priority;
+    private State state;
+    private List<Instruction> instructions;
+    private Instruction instruction;
+    
+    public ProcessControlBlockImpl(String programName, int PID, int priority, State state, List<Instruction> instructions){
+        this.programName =  programName;
+        this.PID = PID;
+        this.priority = priority;
+        this.state = state;
+        this.instructions = instructions;
+    }
         
     @Override
     public int getPID() {
@@ -42,7 +50,7 @@ public class ProcessControlBlockImpl implements ProcessControlBlock {
 
     @Override
     public Instruction getInstruction() {
-        return instruction;
+        return instructions.get(0);
     }
 
     @Override
@@ -57,7 +65,7 @@ public class ProcessControlBlockImpl implements ProcessControlBlock {
 
     @Override
     public void nextInstruction() {
-        System.out.println(instructions.get(0));
+        
     }
 
     @Override
@@ -69,6 +77,8 @@ public class ProcessControlBlockImpl implements ProcessControlBlock {
     public void setState(State state) {
         this.state = state;
     }
+    
+    
     
     public static ProcessControlBlock loadProgram(String filename) throws FileNotFoundException, IOException{
         ProcessControlBlock pcb = null;
