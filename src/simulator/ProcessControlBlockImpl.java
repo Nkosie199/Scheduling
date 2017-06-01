@@ -91,14 +91,16 @@ public class ProcessControlBlockImpl implements ProcessControlBlock {
                 String deviceType = lineElements[0];
                 int burstTime = Integer.parseInt(lineElements[1]);
                 // create CPU process
-                pcb = new ProcessControlBlockImpl(filename, priority, state.READY, new CPUInstruction(burstTime));
+                instruction = new CPUInstruction(burstTime);
+                pcb = new ProcessControlBlockImpl(filename, priority, state.READY, instruction);
             }
             else if (lineElements.length == 3){ // IO instruction
                 String deviceType = lineElements[0];
                 int burstTime = Integer.parseInt(lineElements[1]);
                 int deviceID = Integer.parseInt(lineElements[2]);
                 // create IO process
-                pcb = new ProcessControlBlockImpl(filename, priority, state.READY, new IOInstruction(burstTime, deviceID));
+                instruction = new IOInstruction(burstTime, deviceID);
+                pcb = new ProcessControlBlockImpl(filename, priority, state.READY, instruction);
             }
             line = br.readLine();
         }

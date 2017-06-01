@@ -124,7 +124,7 @@ public class FCFSKernel implements Kernel {
         }
     }
     
-    private static ProcessControlBlock loadProgram(String filename) {
+    public static ProcessControlBlock loadProgram(String filename) {
         try {
             return ProcessControlBlockImpl.loadProgram(filename);
         }

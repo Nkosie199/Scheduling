@@ -42,20 +42,31 @@ public class SimulateFCFS extends FCFSKernel {
         Config.buildConfiguration(configFileName); //Build the workload configuration described in the given configuration file
         Config.run(); //Run the simulation.
         
-        // print out the results
-        SystemTimer timer = Config.getSystemTimer(); //Get the SystemTimer object
-        System.out.println(timer); //Print the SystemTimer (outputs a string describing system time, kernel time, user time, idle time)
-        System.out.println("Context switches:"
-        +Config.getCPU().getContextSwitches()); //Print the number of context switches recorded by the CPU
-        System.out.printf("CPU utilization: %.2f\n",
-        ((double)timer.getUserTime())/timer.getSystemTime()*100); //Calculate and print the CPU utilisation based on the available timings
         
-//        System.out.println("*** Results ***");
-//        System.out.println("System time: "+Config.getSystemTimer().getSystemTime()); //eg. 69        
-//        System.out.println("Kernel time: "+Config.getSystemTimer().getKernelTime()); //eg. 26       
-//        System.out.println("User time: "+Config.getSystemTimer().getUserTime()); //eg. 35       
-//        System.out.println("Idle time: "+Config.getSystemTimer().getIdleTime()); //eg. 8      
-//        System.out.println("Context switches: "+Config.getCPU().getContextSwitches()); //eg. 6      
-//        System.out.println("CPU utilization: "); //eg. 50.72
+        
+        if (traceLevel == 0){
+            // print out the results
+            System.out.println("*** Results ***");
+            SystemTimer timer = Config.getSystemTimer(); //Get the SystemTimer object
+            System.out.println(timer); //Print the SystemTimer (outputs a string describing system time, kernel time, user time, idle time)
+            System.out.println("Context switches:"
+            +Config.getCPU().getContextSwitches()); //Print the number of context switches recorded by the CPU
+            System.out.printf("CPU utilization: %.2f\n",
+            ((double)timer.getUserTime())/timer.getSystemTime()*100); //Calculate and print the CPU utilisation based on the available timings
+        }
+        else if (traceLevel == 1){
+            System.out.println("*** Trace ***");
+            
+            
+            // print out the results
+            System.out.println("*** Results ***");
+            SystemTimer timer = Config.getSystemTimer(); //Get the SystemTimer object
+            System.out.println(timer); //Print the SystemTimer (outputs a string describing system time, kernel time, user time, idle time)
+            System.out.println("Context switches:"
+            +Config.getCPU().getContextSwitches()); //Print the number of context switches recorded by the CPU
+            System.out.printf("CPU utilization: %.2f\n",
+            ((double)timer.getUserTime())/timer.getSystemTime()*100); //Calculate and print the CPU utilisation based on the available timings
+        }
+
     }
 }
