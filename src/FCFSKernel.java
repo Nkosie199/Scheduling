@@ -23,30 +23,29 @@ public class FCFSKernel implements Kernel {
     private Deque<ProcessControlBlock> readyQueue;
         
     public FCFSKernel() {
-		// Set up the ready queue.
-            readyQueue = new ArrayDeque<>();
-            
+        // Set up the ready queue.
+        readyQueue = new ArrayDeque<>();      
     }
     
     private ProcessControlBlock dispatch() {
-            // Perform context switch, swapping process currently on CPU with one at front of ready queue.
-            // If ready queue empty then CPU goes idle ( holds a null value).
-            ProcessControlBlock out;
-            if (readyQueue.isEmpty()){
-                out = Config.getCPU().contextSwitch(null);
-            }
-            else{
-                out = Config.getCPU().contextSwitch(readyQueue.getFirst());
-            }
-            // Returns process removed from CPU.
-            return out;
-    }    
-    
+        // Perform context switch, swapping process currently on CPU with one at front of ready queue.
+        // If ready queue empty then CPU goes idle ( holds a null value).
+        ProcessControlBlock out;
+        if (readyQueue.isEmpty()){
+            out = Config.getCPU().contextSwitch(null);
+        }
+        else{
+            out = Config.getCPU().contextSwitch(readyQueue.getFirst());
+        }
+        // Returns process removed from CPU.
+        return out;
+    }
                 
     public int syscall(int number, Object... varargs) {
         int result = 0;
         switch (number) {
              case MAKE_DEVICE:
+                // called using: syscall(1, id, name)
                 {
                     IODevice device = new IODevice((Integer)varargs[0], (String)varargs[1]);
                     Config.addDevice(device);

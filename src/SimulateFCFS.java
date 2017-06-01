@@ -42,10 +42,12 @@ public class SimulateFCFS extends FCFSKernel {
         Config.buildConfiguration(configFileName); //Build the workload configuration described in the given configuration file
         Config.run(); //Run the simulation.
         
+        // I think I should now implement the simple rules of the FCFS method using syscalls...
         
         
+        // print out the results
         if (traceLevel == 0){
-            // print out the results
+            
             System.out.println("*** Results ***");
             SystemTimer timer = Config.getSystemTimer(); //Get the SystemTimer object
             System.out.println(timer); //Print the SystemTimer (outputs a string describing system time, kernel time, user time, idle time)
@@ -58,7 +60,6 @@ public class SimulateFCFS extends FCFSKernel {
             System.out.println("*** Trace ***");
             
             
-            // print out the results
             System.out.println("*** Results ***");
             SystemTimer timer = Config.getSystemTimer(); //Get the SystemTimer object
             System.out.println(timer); //Print the SystemTimer (outputs a string describing system time, kernel time, user time, idle time)
