@@ -35,7 +35,7 @@ public class FCFSKernel implements Kernel {
             out = Config.getCPU().contextSwitch(null);
         }
         else{
-            out = Config.getCPU().contextSwitch(readyQueue.getFirst());
+            out = Config.getCPU().contextSwitch(readyQueue.removeFirst());
         }
         // Returns process removed from CPU.
         return out;

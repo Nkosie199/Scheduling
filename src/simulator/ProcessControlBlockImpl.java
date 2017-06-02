@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,17 +18,17 @@ public class ProcessControlBlockImpl implements ProcessControlBlock {
     private static int PID = 0;
     private static int priority = 0;
     private static State state;
+    private static List<Instruction> instructions = new ArrayList<>();
     private static Instruction instruction = null;
-    private static Instruction nextInstruction;
+    //private static Instruction nextInstruction;
     
     public ProcessControlBlockImpl(String programName, int priority, State state, Instruction instruction){
         this.programName =  programName;
         this.PID = this.PID++;
         this.priority = priority;
         this.state = state;
-        this.nextInstruction = this.instruction;
         this.instruction = instruction;
-        
+        instructions.add(instruction);
     }
         
     @Override
@@ -58,7 +59,7 @@ public class ProcessControlBlockImpl implements ProcessControlBlock {
 
     @Override
     public boolean hasNextInstruction() {
-        if (nextInstruction == null){ // does not have next instruction
+        if (instructions.get(PID+1) != null){ // does not have next instruction
             return false;
         }
         else{ // has next instruction
@@ -68,7 +69,7 @@ public class ProcessControlBlockImpl implements ProcessControlBlock {
 
     @Override
     public void nextInstruction() {
-        instruction = nextInstruction;
+        instructions.get(PID+1);
     }
 
     @Override
@@ -111,7 +112,6 @@ public class ProcessControlBlockImpl implements ProcessControlBlock {
             }
             line = br.readLine();
         }
-        //System.out.println(pcb.getInstruction());
         return pcb;
     }
     

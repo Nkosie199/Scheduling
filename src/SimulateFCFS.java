@@ -48,7 +48,7 @@ public class SimulateFCFS extends FCFSKernel {
         // print out the results
         if (traceLevel == 0){
             
-            System.out.println("*** Results ***");
+//            System.out.println("*** Results ***");
             SystemTimer timer = Config.getSystemTimer(); //Get the SystemTimer object
             System.out.println(timer); //Print the SystemTimer (outputs a string describing system time, kernel time, user time, idle time)
             System.out.println("Context switches:"
@@ -57,10 +57,9 @@ public class SimulateFCFS extends FCFSKernel {
             ((double)timer.getUserTime())/timer.getSystemTime()*100); //Calculate and print the CPU utilisation based on the available timings
         }
         else if (traceLevel == 1){
-            System.out.println("*** Trace ***");
+//            System.out.println("*** Trace ***");   
             
-            
-            System.out.println("*** Results ***");
+//            System.out.println("*** Results ***");
             SystemTimer timer = Config.getSystemTimer(); //Get the SystemTimer object
             System.out.println(timer); //Print the SystemTimer (outputs a string describing system time, kernel time, user time, idle time)
             System.out.println("Context switches:"
