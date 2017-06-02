@@ -17,15 +17,15 @@ public class ProcessControlBlockImpl implements ProcessControlBlock {
     private static int PID = 0;
     private static int priority = 0;
     private static State state;
-    private static List<Instruction> instructions = new LinkedList<>();
-    private static Instruction instruction;
-    private static Instruction nextInstruction = null;
+    private static Instruction instruction = null;
+    private static Instruction nextInstruction;
     
     public ProcessControlBlockImpl(String programName, int priority, State state, Instruction instruction){
         this.programName =  programName;
         this.PID = this.PID++;
         this.priority = priority;
         this.state = state;
+        this.nextInstruction = this.instruction;
         this.instruction = instruction;
         
     }
@@ -58,17 +58,17 @@ public class ProcessControlBlockImpl implements ProcessControlBlock {
 
     @Override
     public boolean hasNextInstruction() {
-        if (instructions.isEmpty()){ // does not have next instruction
+        if (nextInstruction == null){ // does not have next instruction
             return false;
         }
         else{ // has next instruction
-            return false;
+            return true;
         }
     }
 
     @Override
     public void nextInstruction() {
-        
+        instruction = nextInstruction;
     }
 
     @Override

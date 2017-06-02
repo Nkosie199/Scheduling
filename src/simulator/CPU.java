@@ -45,7 +45,7 @@ public class CPU  {
             units = ((CPUInstruction)instr).execute();
             Config.getSimulationClock().advanceUserTime(units);
             
-            if (getCurrentProcess().hasNextInstruction()) {
+            if (getCurrentProcess().hasNextInstruction() && getCurrentProcess().getInstruction().getClass().equals(IOInstruction.class)) {
                 getCurrentProcess().nextInstruction();
                 assert(getCurrentProcess().getInstruction() instanceof IOInstruction);
                 IOInstruction ioInst = (IOInstruction)getCurrentProcess().getInstruction();
