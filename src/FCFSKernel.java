@@ -60,6 +60,7 @@ public class FCFSKernel implements Kernel {
                         // Loaded successfully.
                         // Now add to end of ready queue.
                         readyQueue.add(pcb);
+                        
 			// If CPU idle then call dispatch.
                         if (Config.getCPU().isIdle()){
                             dispatch();

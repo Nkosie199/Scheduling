@@ -110,12 +110,11 @@ public class ProcessControlBlockImpl implements ProcessControlBlock {
             else if (lineElements.length == 3){ // IO instruction
                 // create IO device
                 String deviceType = lineElements[0];
-                
+
                 int burstTime = Integer.parseInt(lineElements[1]);
                 int deviceID = Integer.parseInt(lineElements[2]);
                 // create IO process
                 instruction = new IOInstruction(burstTime, deviceID);
-                
 //                System.out.println("PCBImpl: Debug print IO instruction = "+instruction);
                 instructions.add(instruction);
             }

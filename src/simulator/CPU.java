@@ -46,7 +46,9 @@ public class CPU  {
                 units = ((CPUInstruction)instr).execute();
             }
             catch(Exception e){
-                System.out.println(e);
+//                System.out.println("");
+//                System.out.println("Error from CPU.execute(): "+e);
+//                System.out.println("");
             }
             Config.getSimulationClock().advanceUserTime(units);
             
@@ -55,16 +57,18 @@ public class CPU  {
                 
                 getCurrentProcess().nextInstruction();
                 assert(getCurrentProcess().getInstruction() instanceof IOInstruction);
-//                try{
+                try{
                     IOInstruction ioInst = (IOInstruction)getCurrentProcess().getInstruction();
                     TRACE.SYSCALL(SystemCall.IO_REQUEST, Config.getDevice(ioInst.getDeviceID()).toString(), ioInst.getDuration(), getCurrentProcess());
                     Config.getSimulationClock().logSystemCall();
                     Config.getKernel().syscall(SystemCall.IO_REQUEST, ioInst.getDeviceID(), new Integer(ioInst.getDuration()));
                     TRACE.SYSCALL_END();
-//                }
-//                catch(Exception e){
-//                    System.out.println(e);
-//                }
+                }
+                catch(Exception e){
+//                    System.out.println("");
+//                    System.out.println("Error from CPU.execute(): "+e);
+//                    System.out.println("");
+                }
                 
             }
             else {
@@ -85,7 +89,7 @@ public class CPU  {
      * the next instruction in the 'program'. This must be a system call (either I/O or terminate).
      * Either will cause this process to be switched out.
      * <p>
-     * The CPU will update the system timer to indicate the amout of user time spent processing.
+     * The CPU will update the system timer to indicate the amount of user time spent processing.
      * <p>
      * The method returns the quantity of unused time unit. A value greater than zero means that 
      * the current cpu burst was completed. A value of zero means the current cpu 
@@ -101,9 +105,16 @@ public class CPU  {
         }
         else {
             Instruction instr = getCurrentProcess().getInstruction();
+//            System.out.println("CPU execute method debug print instr: "+instr);
             assert(instr instanceof CPUInstruction);
-            remainder = ((CPUInstruction)instr).execute(timeUnits);
-
+            try{
+                remainder = ((CPUInstruction)instr).execute(timeUnits);
+            }
+            catch(Exception e){
+//                System.out.println("");
+//                System.out.println("Error from CPU.execute(timeUnits) "+e);
+//                System.out.println("");
+            }
             if (remainder>=0) {
                 // CPU burst completed.
                 // Invoke following IO instruction.

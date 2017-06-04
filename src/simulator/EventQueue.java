@@ -54,4 +54,11 @@ class EventQueue {
      * Determine if queue is empty.
      */
     public boolean isEmpty() { return queue.isEmpty(); }
+    
+    public void debugPrint(){
+        System.out.println("All values in the event queue are as follows:");
+        for (Event e: queue){
+            System.out.println(e);
+        }
+    }
 }

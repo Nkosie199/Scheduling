@@ -44,10 +44,9 @@ public class SimulateFCFS extends FCFSKernel {
         
         // I think I should now implement the simple rules of the FCFS method using syscalls...
         
-        
+             
         // print out the results
-        if (traceLevel == 0){
-            
+        if (traceLevel == 0){   
             System.out.println("*** Results ***");
             SystemTimer timer = Config.getSystemTimer(); //Get the SystemTimer object
             System.out.println(timer); //Print the SystemTimer (outputs a string describing system time, kernel time, user time, idle time)
@@ -67,6 +66,5 @@ public class SimulateFCFS extends FCFSKernel {
             System.out.printf("CPU utilization: %.2f\n",
             ((double)timer.getUserTime())/timer.getSystemTime()*100); //Calculate and print the CPU utilisation based on the available timings
         }
-
     }
 }
