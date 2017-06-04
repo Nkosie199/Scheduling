@@ -35,7 +35,8 @@ public class FCFSKernel implements Kernel {
             out = Config.getCPU().contextSwitch(null);
         }
         else{
-            out = Config.getCPU().contextSwitch(readyQueue.removeFirst());
+            ProcessControlBlock process = readyQueue.removeFirst();
+            out = Config.getCPU().contextSwitch(process);
         }
         // Returns process removed from CPU.
         return out;
@@ -45,13 +46,14 @@ public class FCFSKernel implements Kernel {
         int result = 0;
         switch (number) {
              case MAKE_DEVICE:
-                // called using: syscall(1, id, name)
+                // called from Config using: syscall(1, deviceID, deviceName)
                 {
                     IODevice device = new IODevice((Integer)varargs[0], (String)varargs[1]);
                     Config.addDevice(device);
                 }
                 break;
              case EXECVE: 
+                // called using: syscall(2, fileName)
                 {
                     ProcessControlBlock pcb = this.loadProgram((String)varargs[0]);
                     if (pcb!=null) {
@@ -69,6 +71,7 @@ public class FCFSKernel implements Kernel {
                 }
                 break;
              case IO_REQUEST: 
+                // syscall(3, deviceID, burstTime) 
                 {
                     // IO request has come from process currently on the CPU.
                     // Get PCB from CPU.
@@ -86,12 +89,13 @@ public class FCFSKernel implements Kernel {
                 }
                 break;
              case TERMINATE_PROCESS:
+                // called using syscall(4)
                 {
                     // Process on the CPU has terminated.
                     // Get PCB from CPU.
                     ProcessControlBlock pcb = Config.getCPU().getCurrentProcess();
                     // Set status to TERMINATED.
-                    pcb.setState(ProcessControlBlock.State.WAITING);
+                    pcb.setState(ProcessControlBlock.State.TERMINATED);
                     // Call dispatch().
                     dispatch();
                 }

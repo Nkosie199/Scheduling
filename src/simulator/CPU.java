@@ -42,18 +42,30 @@ public class CPU  {
         else {
             Instruction instr = getCurrentProcess().getInstruction();
             assert(instr instanceof CPUInstruction);
-            units = ((CPUInstruction)instr).execute();
+            try{
+                units = ((CPUInstruction)instr).execute();
+            }
+            catch(Exception e){
+                System.out.println(e);
+            }
             Config.getSimulationClock().advanceUserTime(units);
             
-            if (getCurrentProcess().hasNextInstruction() && getCurrentProcess().getInstruction().getClass().equals(IOInstruction.class)) {
+            if (getCurrentProcess().hasNextInstruction()) { 
+                // && getCurrentProcess().getInstruction().getClass().equals(IOInstruction.class) [additional check]
+                
                 getCurrentProcess().nextInstruction();
                 assert(getCurrentProcess().getInstruction() instanceof IOInstruction);
-                IOInstruction ioInst = (IOInstruction)getCurrentProcess().getInstruction();
-                TRACE.SYSCALL(SystemCall.IO_REQUEST, Config.getDevice(ioInst.getDeviceID()).toString(), ioInst.getDuration(), getCurrentProcess());
-                Config.getSimulationClock().logSystemCall();
-                Config.getKernel().syscall(SystemCall.IO_REQUEST, ioInst.getDeviceID(), new Integer(ioInst.getDuration()));
-                TRACE.SYSCALL_END();
-
+//                try{
+                    IOInstruction ioInst = (IOInstruction)getCurrentProcess().getInstruction();
+                    TRACE.SYSCALL(SystemCall.IO_REQUEST, Config.getDevice(ioInst.getDeviceID()).toString(), ioInst.getDuration(), getCurrentProcess());
+                    Config.getSimulationClock().logSystemCall();
+                    Config.getKernel().syscall(SystemCall.IO_REQUEST, ioInst.getDeviceID(), new Integer(ioInst.getDuration()));
+                    TRACE.SYSCALL_END();
+//                }
+//                catch(Exception e){
+//                    System.out.println(e);
+//                }
+                
             }
             else {
                 // Terminate process
@@ -91,7 +103,7 @@ public class CPU  {
             Instruction instr = getCurrentProcess().getInstruction();
             assert(instr instanceof CPUInstruction);
             remainder = ((CPUInstruction)instr).execute(timeUnits);
-            
+
             if (remainder>=0) {
                 // CPU burst completed.
                 // Invoke following IO instruction.

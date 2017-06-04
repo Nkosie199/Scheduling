@@ -69,7 +69,7 @@ public class Config {
     public static void run() {
         Config.clock.setSystemTime(0);
         Config.scheduler.run();
-	}
+    }
 	   
     /**
 	 * Complete the simulation configuration by uploading the given config file.
