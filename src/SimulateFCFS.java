@@ -46,7 +46,8 @@ public class SimulateFCFS extends FCFSKernel {
         
              
         // print out the results
-        if (traceLevel == 0){   
+        if (traceLevel == 0){ 
+            System.out.println("");
             System.out.println("*** Results ***");
             SystemTimer timer = Config.getSystemTimer(); //Get the SystemTimer object
             System.out.println(timer); //Print the SystemTimer (outputs a string describing system time, kernel time, user time, idle time)
@@ -57,7 +58,7 @@ public class SimulateFCFS extends FCFSKernel {
         }
         else if (traceLevel == 1){
 //            System.out.println("*** Trace ***");   
-            
+            System.out.println("");
             System.out.println("*** Results ***");
             SystemTimer timer = Config.getSystemTimer(); //Get the SystemTimer object
             System.out.println(timer); //Print the SystemTimer (outputs a string describing system time, kernel time, user time, idle time)

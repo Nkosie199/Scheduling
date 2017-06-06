@@ -25,10 +25,10 @@ class EventScheduler {
     
     public void run() {
         assert(Config.getSimulationClock()!=null & Config.getCPU()!=null);
-//        //
-//        System.out.println("EventScheduler.run() called this:");
-//        queue.debugPrint();
-//        //
+        //
+        System.out.println("EventScheduler.run() called this:");
+        queue.debugPrint();
+        //
         while (!(queue.isEmpty() && Config.getCPU().isIdle())) {
             while (!queue.isEmpty() && queue.peek().getTime()<=Config.getSimulationClock().getSystemTime()) {
                 final Event event = queue.poll();

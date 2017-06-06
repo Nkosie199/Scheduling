@@ -41,22 +41,25 @@ public class CPU  {
         }
         else {
             Instruction instr = getCurrentProcess().getInstruction();
+            System.out.println("CPU execute() debug print instr: "+instr);
             assert(instr instanceof CPUInstruction);
             try{
                 units = ((CPUInstruction)instr).execute();
             }
             catch(Exception e){
-//                System.out.println("");
-//                System.out.println("Error from CPU.execute(): "+e);
-//                System.out.println("");
+                System.out.println("");
+                System.out.println("Error from CPU.execute(): "+e);
+                System.out.println("");
             }
             Config.getSimulationClock().advanceUserTime(units);
             
             if (getCurrentProcess().hasNextInstruction()) { 
                 // && getCurrentProcess().getInstruction().getClass().equals(IOInstruction.class) [additional check]
                 
-                getCurrentProcess().nextInstruction();
-                assert(getCurrentProcess().getInstruction() instanceof IOInstruction);
+                getCurrentProcess().nextInstruction();  //sets instruction to the index of the next instruction
+                instr = getCurrentProcess().getInstruction();
+                System.out.println("CPU execute() debug print instr (2): "+instr);
+                assert(instr instanceof IOInstruction);
                 try{
                     IOInstruction ioInst = (IOInstruction)getCurrentProcess().getInstruction();
                     TRACE.SYSCALL(SystemCall.IO_REQUEST, Config.getDevice(ioInst.getDeviceID()).toString(), ioInst.getDuration(), getCurrentProcess());
@@ -65,9 +68,9 @@ public class CPU  {
                     TRACE.SYSCALL_END();
                 }
                 catch(Exception e){
-//                    System.out.println("");
-//                    System.out.println("Error from CPU.execute(): "+e);
-//                    System.out.println("");
+                    System.out.println("");
+                    System.out.println("Error from CPU.execute(): "+e);
+                    System.out.println("");
                 }
                 
             }
@@ -105,15 +108,15 @@ public class CPU  {
         }
         else {
             Instruction instr = getCurrentProcess().getInstruction();
-//            System.out.println("CPU execute method debug print instr: "+instr);
+            System.out.println("CPU execute(timeUnits) debug print instr: "+instr);
             assert(instr instanceof CPUInstruction);
             try{
                 remainder = ((CPUInstruction)instr).execute(timeUnits);
             }
             catch(Exception e){
-//                System.out.println("");
-//                System.out.println("Error from CPU.execute(timeUnits) "+e);
-//                System.out.println("");
+                System.out.println("");
+                System.out.println("Error from CPU.execute(timeUnits) "+e);
+                System.out.println("");
             }
             if (remainder>=0) {
                 // CPU burst completed.

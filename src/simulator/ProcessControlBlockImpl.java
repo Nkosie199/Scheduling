@@ -13,13 +13,13 @@ import java.util.List;
  * @author gmdnko003
  */
 public class ProcessControlBlockImpl implements ProcessControlBlock {
-    
+//    private static ProcessControlBlock pcb;
     private static String programName;
     private static int PID = 0;
     private static int priority = 0;
     private static State state;
-    private static List<Instruction> instructions;
-//    private static List<Instruction> instructions = new ArrayList<>();
+//    private static List<Instruction> instructions;
+    private static List<Instruction> instructions = new ArrayList<>();
     private static int instructionIndex = 0;
     private static Instruction instruction = null;
     //private static Instruction nextInstruction;
@@ -56,14 +56,14 @@ public class ProcessControlBlockImpl implements ProcessControlBlock {
 
     @Override
     public Instruction getInstruction() {
-        return instructions.get(instructionIndex);
+        return instruction;
     }
 
     @Override
     public boolean hasNextInstruction() {
-        this.instructionIndex = instructionIndex+1; //increment the instruction index
+//        this.instructionIndex = instructionIndex+1; //increment the instruction index
 //        System.out.println("PCBImpl debug print instruction index: "+instructionIndex);
-        if (instructions.size() > instructionIndex){ // has next instruction
+        if (instructions.size() > instructionIndex+1){ // has next instruction
             return true;
         }
         else{ // does not have next instruction
@@ -73,7 +73,7 @@ public class ProcessControlBlockImpl implements ProcessControlBlock {
 
     @Override
     public void nextInstruction() { 
-//        instructionIndex = instructionIndex+1; 
+        instructionIndex = instructionIndex+1; 
         instruction = instructions.get(instructionIndex);
     }
 
@@ -88,8 +88,9 @@ public class ProcessControlBlockImpl implements ProcessControlBlock {
     }
 
     public static ProcessControlBlock loadProgram(String filename) throws FileNotFoundException, IOException{
-        ProcessControlBlock pcb = null;
-        instructions = new ArrayList<>();
+        ProcessControlBlock pcb;
+//        pcb = new ProcessControlBlockImpl();
+//        instructions = new ArrayList<>();
         FileReader fr = new FileReader(filename);
         BufferedReader br = new BufferedReader(fr);
         String line = br.readLine();
