@@ -13,8 +13,8 @@ public class CPU  {
     private int contextSwitches;
     
     CPU() {
-        this.contextSwitches = 0;
-        this.currentProcess = null;
+        contextSwitches = 0;
+        currentProcess = null;
     }  
     
     /**
@@ -41,7 +41,8 @@ public class CPU  {
         }
         else {
             Instruction instr = getCurrentProcess().getInstruction();
-            System.out.println("CPU execute() debug print instr: "+instr);
+//            System.out.println("CPU execute() debug current process: "+getCurrentProcess());
+//            System.out.println("CPU execute() debug print instr: "+instr);
             assert(instr instanceof CPUInstruction);
             try{
                 units = ((CPUInstruction)instr).execute();
@@ -58,7 +59,7 @@ public class CPU  {
                 
                 getCurrentProcess().nextInstruction();  //sets instruction to the index of the next instruction
                 instr = getCurrentProcess().getInstruction();
-                System.out.println("CPU execute() debug print instr (2): "+instr);
+//                System.out.println("CPU execute() debug print instr (2): "+instr);
                 assert(instr instanceof IOInstruction);
                 try{
                     IOInstruction ioInst = (IOInstruction)getCurrentProcess().getInstruction();
@@ -108,7 +109,7 @@ public class CPU  {
         }
         else {
             Instruction instr = getCurrentProcess().getInstruction();
-            System.out.println("CPU execute(timeUnits) debug print instr: "+instr);
+//            System.out.println("CPU execute(timeUnits) debug print instr: "+instr);
             assert(instr instanceof CPUInstruction);
             try{
                 remainder = ((CPUInstruction)instr).execute(timeUnits);
@@ -172,7 +173,11 @@ public class CPU  {
     public ProcessControlBlock contextSwitch(ProcessControlBlock process) {
         contextSwitches++;
         ProcessControlBlock out = currentProcess;
+        
+//        System.out.println("CPU.contextSwitch(process) debug print current process (old): "+currentProcess);
         currentProcess = process;
+//        System.out.println("CPU.contextSwitch(process) debug print current process (new): "+currentProcess);
+        
         TRACE.PRINTF(1, "Time: %010d Kernel: Context Switch %s, %s).\n", Config.getSimulationClock().getSystemTime(), format(out), format(process)); 
         Config.getSimulationClock().logContextSwitch();
         return out;
