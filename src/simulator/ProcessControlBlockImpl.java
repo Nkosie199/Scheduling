@@ -14,7 +14,7 @@ import java.util.List;
 public class ProcessControlBlockImpl implements ProcessControlBlock {
 //    private static ProcessControlBlock pcb;
     private String programName;
-    private static int PIDcounter = 0;
+    public static int PIDcounter = 0;
     private int PID;
     private int priority;
     private State state = null;
@@ -127,6 +127,73 @@ public class ProcessControlBlockImpl implements ProcessControlBlock {
         pcb.setState(ProcessControlBlock.State.READY);
         return pcb;
     }
+    
+    // going to be called twice by programs A & B
+    // this method splits instructions into slices, where noOfSlices = burstTime/sliceTime  
+    public static ProcessControlBlock loadProgram2(String filename, int sliceTime) throws FileNotFoundException, IOException{
+        ProcessControlBlock pcb;
+        List<Instruction> instructions = new ArrayList<>();
+        FileReader fr = new FileReader(filename);
+        BufferedReader br = new BufferedReader(fr);
+        String line = br.readLine();
+        // for each line in the program
+        while (line != null){
+            //System.out.println(line);
+            String[] lineElements = line.split(" ");
+            if (lineElements.length == 2){ // CPU instruction
+                // create CPU device
+                String deviceType = lineElements[0];
+                
+                int burstTime = Integer.parseInt(lineElements[1]);
+                if (burstTime > sliceTime){
+                    int noOfSlices = burstTime/sliceTime;
+                    for (int i=0; i<noOfSlices; i++){
+                        // create CPU process
+                        Instruction instr = new CPUInstruction(burstTime/noOfSlices);
+                        System.out.println("PCBImpl: Debug print CPU instruction = "+instr);                       
+                        instructions.add(instr);  
+                    }
+                }
+                else{
+                    // create CPU process
+                    Instruction instr = new CPUInstruction(burstTime);
+                    System.out.println("PCBImpl: Debug print CPU instruction = "+instr);                    
+                    instructions.add(instr);  
+                }              
+            }
+            else if (lineElements.length == 3){ // IO instruction
+                // create IO device
+                String deviceType = lineElements[0];
+
+                int burstTime = Integer.parseInt(lineElements[1]);
+                int deviceID = Integer.parseInt(lineElements[2]);
+                
+                if (burstTime > sliceTime){
+                    int noOfSlices = burstTime/sliceTime;
+                    for (int i=0; i<noOfSlices; i++){
+                        // create CPU process
+                        Instruction instr = new IOInstruction(burstTime/noOfSlices, deviceID);
+                        System.out.println("PCBImpl: Debug print CPU instruction = "+instr);                       
+                        instructions.add(instr);  
+                    }
+                }
+                else{
+                    // create IO process
+                    Instruction instr = new IOInstruction(burstTime, deviceID);
+                    System.out.println("PCBImpl: Debug print IO instruction = "+instr);
+                    instructions.add(instr);                    
+                }
+            }
+            line = br.readLine();
+        }
+        br.close();
+        fr.close();
+        pcb = new ProcessControlBlockImpl(filename, instructions);
+//        pcb.setPriority(0);
+        pcb.setState(ProcessControlBlock.State.READY);
+        return pcb;
+    }
+    
     
     public String toString(){
         return "process(pid="+this.getPID()+", state="+this.getState()+", name=\""+this.getProgramName()+"\")";

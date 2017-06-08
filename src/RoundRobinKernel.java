@@ -8,7 +8,11 @@ import java.io.IOException;
 //
 import java.util.ArrayDeque;
 import java.util.Deque;
+import simulator.CPUInstruction;
+import simulator.Instruction;
 import simulator.ProcessControlBlockImpl;
+import simulator.SystemTimer;
+import simulator.SimulationClock;
 
 /**
  *
@@ -29,7 +33,42 @@ public class RoundRobinKernel implements Kernel {
     private ProcessControlBlock dispatch() {
         // Perform context switch, swapping process currently on CPU with one at front of ready queue.
         // If ready queue empty then CPU goes idle ( holds a null value).
+//        System.out.println("");
+//        System.out.println("RRKernel debug print ready queue: "+readyQueue);
+        
+        // Need to establish which process needs CPU time for each time slice
+        int noOfProcesses = ProcessControlBlockImpl.PIDcounter;
+//        System.out.println("RRKernel dispatch() debug print # of processes: "+noOfProcesses);
+        
+        // Need to establish current system time
+        long sysTime = Config.getSystemTimer().getSystemTime();
+//        System.out.println("RRKernel dispatch() debug print current system time: "+sysTime);
+        
+        // Need to establish slice # 
+        int sliceNo = (int) sysTime/timeSlice;
+//        System.out.println("RRKernel dispatch() debug print slice #: "+sliceNo);
+        
+        // now each slice needs to be attributed to a process
+        int priorityPID = (sliceNo%noOfProcesses)+1;
+//        System.out.println("RRKernel dispatch() debug print priority process ID: "+priorityPID);
+        
+        // if PCB.pid!=prioriyPID: switch PBC out and add it to the back of the readyQueue    
+        ProcessControlBlock process = readyQueue.peek();
         ProcessControlBlock out;
+        try{
+//            System.out.println("RRKernel dispatch() debug print this processes ID: "+process.getPID());
+            if (process.getPID() != priorityPID){
+//                System.out.println("RRKernel dispatch switching out incorrect process!!!");
+                ProcessControlBlock pcb = readyQueue.removeFirst();
+                out = Config.getCPU().contextSwitch(pcb);
+                readyQueue.add(out);
+                dispatch();   
+            }
+        }
+        catch(Exception e){
+            
+        }
+        // due procedure ...
         if (readyQueue.isEmpty()){
             out = Config.getCPU().contextSwitch(null);
         }
@@ -57,16 +96,9 @@ public class RoundRobinKernel implements Kernel {
                     ProcessControlBlock pcb = loadProgram((String)varargs[0]);
                     if (pcb!=null) {
                         // Loaded successfully.
-                        // Now divide the process into slices and add each slice to end of ready queue.
-                        float slices = pcb.getInstruction().getDuration()/timeSlice;
-                        System.out.println("RRKernel debug print # of slices: "+slices);
-                        for (int i=0; i<slices; i++){
-                            // edit each intruction duration
-                            int duration =pcb.getInstruction().getDuration();
-                            System.out.println("Duration: "+duration);
-                            readyQueue.add(pcb);
-                        }                     
-                        System.out.println("RRKernel debug print ready queue: "+readyQueue);
+                        // Now add to end of ready queue.
+                        readyQueue.add(pcb);
+
 			// If CPU idle then call dispatch.
                         if (Config.getCPU().isIdle()){
                             dispatch();
@@ -146,6 +178,48 @@ public class RoundRobinKernel implements Kernel {
             return null;
         }
     }
+   
+//    private ProcessControlBlock dispatch() {
+//        // Perform context switch, swapping process currently on CPU with one at front of ready queue.
+//        // If ready queue empty then CPU goes idle ( holds a null value).
+//        System.out.println("");
+//        System.out.println("RRKernel debug print ready queue: "+readyQueue);
+//        ProcessControlBlock out;
+//        if (readyQueue.isEmpty()){
+//            out = Config.getCPU().contextSwitch(null);
+//        }
+//        else{
+//            ProcessControlBlock process = readyQueue.peek();
+//            Instruction instr = process.getInstruction();
+//            int duration = instr.getDuration();
+//            System.out.println("RRKernel debug print instruction: "+instr);
+//            System.out.println("RRKernel debug print intsruction duration: "+duration);
+//            
+//            if (duration > timeSlice){
+//                ProcessControlBlock pcb = readyQueue.removeFirst();
+////                System.out.println("");
+////                System.out.println("RRKernel debug print process in: "+pcb);
+//                out = Config.getCPU().contextSwitch(pcb);
+////                System.out.println("RRkernel debug print process out: "+out);
+////                System.out.println("");
+//                // execute for duration then switch
+//                readyQueue.add(out); //add the process switched out to the back of the ready queue 
+//                //possibility of infinite loop!!
+//                dispatch(); //switch in next process
+//            }
+//            else{
+//                ProcessControlBlock pcb = readyQueue.removeFirst();
+////                System.out.println("");
+////                System.out.println("RRKernel debug print process in: "+pcb);
+//                out = Config.getCPU().contextSwitch(pcb);
+////                System.out.println("RRKernel debug print process out: "+out);
+////                System.out.println("");                
+//            }
+//            
+//        }
+//        // Returns process removed from CPU.
+//        return out;
+//    }    
     
    
 }

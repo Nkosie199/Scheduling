@@ -8,7 +8,7 @@ import java.util.Map;
  * @author Stephan Jamieson
  * @version 8/3/2015
  */
-class SimulationClock implements EventHandler<TimeOutEvent>, SystemTimer {
+public class SimulationClock implements EventHandler<TimeOutEvent>, SystemTimer {
     
     private final int SYSCALL_COST;
     private final int CSWITCH_COST;
