@@ -20,19 +20,19 @@ public class SimulateFCFS extends FCFSKernel {
         System.out.println("*** FCFS Simulator ***");
         
         // get configuration file name
-        System.out.println("Enter configuration file name: "); //eg. Test2C/config.cfg
+        System.out.print("Enter configuration file name: "); //eg. Test2C/config.cfg
         configFileName = sc.nextLine();
         
         // get cost of system call
-        System.out.println("Enter cost of system call: "); //eg. 1
+        System.out.print("Enter cost of system call: "); //eg. 1
         costOfSyscall = sc.nextInt();
         
         // get cost of context switch
-        System.out.println("Enter cost of context switch: "); //eg. 3
+        System.out.print("Enter cost of context switch: "); //eg. 3
         costOfContextSwitch = sc.nextInt();
         
         // get trace level (0 or 1)
-        System.out.println("Enter trace level: "); //eg. 0
+        System.out.print("Enter trace level: "); //eg. 0
         traceLevel = sc.nextInt();
         
         // run the experiment
@@ -43,10 +43,9 @@ public class SimulateFCFS extends FCFSKernel {
         Config.run(); //Run the simulation.
         
         // print out the results
-        System.out.println("*** Results ***");
         SystemTimer timer = Config.getSystemTimer(); //Get the SystemTimer object
         System.out.println(timer); //Print the SystemTimer (outputs a string describing system time, kernel time, user time, idle time)
-        System.out.println("Context switches:"
+        System.out.println("Context switches: "
         +Config.getCPU().getContextSwitches()); //Print the number of context switches recorded by the CPU
         System.out.printf("CPU utilization: %.2f\n",
         ((double)timer.getUserTime())/timer.getSystemTime()*100); //Calculate and print the CPU utilisation based on the available timings

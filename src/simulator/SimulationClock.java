@@ -42,7 +42,7 @@ public class SimulationClock implements EventHandler<TimeOutEvent>, SystemTimer 
         TRACE.INTERRUPT(InterruptHandler.TIME_OUT, Config.getCPU().getCurrentProcess());
         Config.getSimulationClock().logInterrupt();
         handler.interrupt(InterruptHandler.TIME_OUT, event.getProcessID());
-        TRACE.INTERRUPT_END();
+        TRACE.INTERRUPT_END();        
     }
     
     

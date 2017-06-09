@@ -172,14 +172,18 @@ public class CPU  {
      */    
     public ProcessControlBlock contextSwitch(ProcessControlBlock process) {
         contextSwitches++;
-        ProcessControlBlock out = currentProcess;
-        
-//        System.out.println("CPU.contextSwitch(process) debug print current process (old): "+currentProcess);
+        ProcessControlBlock out = currentProcess;;
         currentProcess = process;
-//        System.out.println("CPU.contextSwitch(process) debug print current process (new): "+currentProcess);
-        
         TRACE.PRINTF(1, "Time: %010d Kernel: Context Switch %s, %s).\n", Config.getSimulationClock().getSystemTime(), format(out), format(process)); 
         Config.getSimulationClock().logContextSwitch();
+        
+        // MY CODE FOR AUTOMARKER
+        try{
+            currentProcess.setState(ProcessControlBlock.State.RUNNING);
+        }catch(Exception e){          
+        }
+        // END OF MY CODE FOR AUTOMARKER
+        
         return out;
     }
     

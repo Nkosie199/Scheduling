@@ -36,6 +36,7 @@ public class FCFSKernel implements Kernel {
         else{
 //            ProcessControlBlock process = readyQueue.peek();
             ProcessControlBlock pcb = readyQueue.removeFirst();
+            
 //            System.out.println("");
 //            System.out.println("Debug print process in: "+pcb);
             out = Config.getCPU().contextSwitch(pcb);
@@ -124,6 +125,7 @@ public class FCFSKernel implements Kernel {
                 ProcessControlBlock pcb = (ProcessControlBlock) varargs[1];
                 // to READY, put it on the end of the ready queue.
                 pcb.setState(ProcessControlBlock.State.READY);
+//                pcb.setState(ProcessControlBlock.State.RUNNING);
                 readyQueue.add(pcb);
                 // If CPU is idle then dispatch().
                 if (Config.getCPU().isIdle()){
