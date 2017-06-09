@@ -36,7 +36,7 @@ public class RoundRobinKernel implements Kernel {
         // Perform context switch, swapping process currently on CPU with one at front of ready queue.
         // If ready queue empty then CPU goes idle ( holds a null value).
       
-        System.out.println("");
+//        System.out.println("");
         System.out.println("RRKernel debug print ready queue: "+readyQueue);       
         // Need to establish which process needs CPU time for each time slice
         int noOfProcesses = ProcessControlBlockImpl.PIDcounter;
@@ -76,18 +76,15 @@ public class RoundRobinKernel implements Kernel {
 //        try{
             if (readyQueue.isEmpty()){
                 out = Config.getCPU().contextSwitch(null);
-                // let's try this
-//                Config.getSystemTimer().scheduleInterrupt(timeSlice, this , null);
+                // now wake up timed out event  
+//                Config.getSystemTimer().cancelInterrupt(timedOutPID);
             }
             else{
                 ProcessControlBlock pcb = readyQueue.removeFirst();
                 // always schedule interrupts in pcb != null ...
-                if (pcb != null){
-                    Config.getSystemTimer().scheduleInterrupt(timeSlice, this , pcb.getPID());                   
-                }
-                else{
-                    System.out.println("RRKernel warning: Switching in a null process!");
-                }             
+                
+                Config.getSystemTimer().scheduleInterrupt(timeSlice, this , pcb.getPID());  
+                                                   
                 out = Config.getCPU().contextSwitch(pcb);
             }            
 //        }
@@ -178,12 +175,14 @@ public class RoundRobinKernel implements Kernel {
             case TIME_OUT:
                 //throw new IllegalArgumentException("FCFSKernel:interrupt("+interruptType+"...): this kernel does not suppor timeouts.");
                 timedOutPID = (int) varargs[0];
-                System.out.println("RRKernel.interrupt processID of timed out process : "+timedOutPID);
+//                System.out.println("RRKernel.interrupt processID of timed out process : "+timedOutPID);
                 
                 // Switch in process at front of ready queue and add the current process to the back of it  
                 ProcessControlBlock processOut = dispatch();
                 processOut.setState(ProcessControlBlock.State.READY);
                 readyQueue.add(processOut);
+                //
+                interrupt(1, timedOutPID, processOut); // wake up process that was timed out
                 break;
             case WAKE_UP:
                 // IODevice has finished an IO request for a process.
