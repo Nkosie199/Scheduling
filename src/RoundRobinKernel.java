@@ -37,7 +37,7 @@ public class RoundRobinKernel implements Kernel {
         // If ready queue empty then CPU goes idle ( holds a null value).
       
 //        System.out.println("");
-        System.out.println("RRKernel debug print ready queue: "+readyQueue);       
+//        System.out.println("RRKernel debug print ready queue: "+readyQueue);       
         // Need to establish which process needs CPU time for each time slice
         int noOfProcesses = ProcessControlBlockImpl.PIDcounter;
 //        System.out.println("RRKernel dispatch() debug print # of processes: "+noOfProcesses);       
@@ -178,11 +178,12 @@ public class RoundRobinKernel implements Kernel {
 //                System.out.println("RRKernel.interrupt processID of timed out process : "+timedOutPID);
                 
                 // Switch in process at front of ready queue and add the current process to the back of it  
-                ProcessControlBlock processOut = dispatch();
-                processOut.setState(ProcessControlBlock.State.READY);
-                readyQueue.add(processOut);
-                //
-                interrupt(1, timedOutPID, processOut); // wake up process that was timed out
+                if (!Config.getCPU().isIdle()){
+                    ProcessControlBlock processOut = dispatch();
+//                    processOut.setState(ProcessControlBlock.State.READY);
+//                    readyQueue.add(processOut);
+                    interrupt(1, timedOutPID, processOut); // wake up process that was timed out                    
+                }
                 break;
             case WAKE_UP:
                 // IODevice has finished an IO request for a process.
