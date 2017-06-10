@@ -53,54 +53,23 @@ public class RoundRobinKernel implements Kernel {
         // if PCB.pid!=prioriyPID: switch PBC out and add it to the back of the readyQueue    
         ProcessControlBlock process = readyQueue.peek();
         ProcessControlBlock out = null;
-        
-        // 1ST METHOD
-//        try{
-////            System.out.println("RRKernel dispatch() debug print this processes ID: "+process.getPID());
-//            if (process.getPID() != priorityPID){
-//                int duration = process.getInstruction().getDuration();
-////                System.out.println("RRKernel dispatch() debug print duration: "+duration);
-//                
-////                System.out.println("RRKernel dispatch switching out incorrect process!!!");
-//                ProcessControlBlock pcb = readyQueue.removeFirst();
-//                out = Config.getCPU().contextSwitch(pcb);
-//                readyQueue.add(out);
-//                dispatch();   
-//            }
-//        }
-//        catch(Exception e){     
-//        }
-        // END OF 1ST METHOD
-        
+ 
         // 2ND METHOD
-//        try{
             if (readyQueue.isEmpty()){
                 out = Config.getCPU().contextSwitch(null);
                 // now wake up timed out event  
 //                Config.getSystemTimer().cancelInterrupt(timedOutPID);
+//                interrupt(1, timedOutPID, out);
             }
             else{
                 ProcessControlBlock pcb = readyQueue.removeFirst();
                 // always schedule interrupts in pcb != null ...
-                
-                Config.getSystemTimer().scheduleInterrupt(timeSlice, this , pcb.getPID());  
-                                                   
+                if (pcb.getInstruction().getDuration() >= timeSlice){
+//                    System.out.println("Scheduling time out for instruction: "+pcb.getInstruction());
+                    Config.getSystemTimer().scheduleInterrupt(timeSlice, this , pcb.getPID()); 
+                }                                       
                 out = Config.getCPU().contextSwitch(pcb);
             }            
-//        }
-//        catch(Exception e){     
-//        }
-        // END OF 2ND METHOD
-        
-        // due procedure ...
-//        if (readyQueue.isEmpty()){
-//            out = Config.getCPU().contextSwitch(null);
-//        }
-//        else{
-//            ProcessControlBlock pcb = readyQueue.removeFirst();
-//            out = Config.getCPU().contextSwitch(pcb);
-//        }
-//        // Returns process removed from CPU.
         return out;
     }
                 
@@ -173,16 +142,19 @@ public class RoundRobinKernel implements Kernel {
     public void interrupt(int interruptType, Object... varargs){
         switch (interruptType) {
             case TIME_OUT:
-                //throw new IllegalArgumentException("FCFSKernel:interrupt("+interruptType+"...): this kernel does not suppor timeouts.");
+//                throw new IllegalArgumentException("FCFSKernel:interrupt("+interruptType+"...): this kernel does not suppor timeouts.");
+                //
                 timedOutPID = (int) varargs[0];
 //                System.out.println("RRKernel.interrupt processID of timed out process : "+timedOutPID);
                 
                 // Switch in process at front of ready queue and add the current process to the back of it  
-                if (!Config.getCPU().isIdle()){
+                if (Config.getCPU().isIdle()){
                     ProcessControlBlock processOut = dispatch();
-//                    processOut.setState(ProcessControlBlock.State.READY);
-//                    readyQueue.add(processOut);
-                    interrupt(1, timedOutPID, processOut); // wake up process that was timed out                    
+                    processOut.setState(ProcessControlBlock.State.READY);
+                    readyQueue.add(processOut);
+                    //
+//                    interrupt(1, timedOutPID, processOut); // wake up process that was timed out
+//                    interrupt(1, timedOutPID, readyQueue.peek());
                 }
                 break;
             case WAKE_UP:
