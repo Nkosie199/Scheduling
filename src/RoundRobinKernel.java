@@ -184,49 +184,5 @@ public class RoundRobinKernel implements Kernel {
         catch (IOException ioExp) {
             return null;
         }
-    }
-   
-//    private ProcessControlBlock dispatch() {
-//        // Perform context switch, swapping process currently on CPU with one at front of ready queue.
-//        // If ready queue empty then CPU goes idle ( holds a null value).
-//        System.out.println("");
-//        System.out.println("RRKernel debug print ready queue: "+readyQueue);
-//        ProcessControlBlock out;
-//        if (readyQueue.isEmpty()){
-//            out = Config.getCPU().contextSwitch(null);
-//        }
-//        else{
-//            ProcessControlBlock process = readyQueue.peek();
-//            Instruction instr = process.getInstruction();
-//            int duration = instr.getDuration();
-//            System.out.println("RRKernel debug print instruction: "+instr);
-//            System.out.println("RRKernel debug print intsruction duration: "+duration);
-//            
-//            if (duration > timeSlice){
-//                ProcessControlBlock pcb = readyQueue.removeFirst();
-////                System.out.println("");
-////                System.out.println("RRKernel debug print process in: "+pcb);
-//                out = Config.getCPU().contextSwitch(pcb);
-////                System.out.println("RRkernel debug print process out: "+out);
-////                System.out.println("");
-//                // execute for duration then switch
-//                readyQueue.add(out); //add the process switched out to the back of the ready queue 
-//                //possibility of infinite loop!!
-//                dispatch(); //switch in next process
-//            }
-//            else{
-//                ProcessControlBlock pcb = readyQueue.removeFirst();
-////                System.out.println("");
-////                System.out.println("RRKernel debug print process in: "+pcb);
-//                out = Config.getCPU().contextSwitch(pcb);
-////                System.out.println("RRKernel debug print process out: "+out);
-////                System.out.println("");                
-//            }
-//            
-//        }
-//        // Returns process removed from CPU.
-//        return out;
-//    }    
-    
-   
+    }  
 }
